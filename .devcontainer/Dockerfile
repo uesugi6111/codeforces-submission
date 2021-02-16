@@ -19,8 +19,8 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # Install Rust components
 RUN cargo install cargo-compete cargo-member
-RUN rustup toolchain install 1.42.0-x86_64-unknown-linux-gnu \
-    &&rustup component add rls rust-src rustfmt clippy --toolchain 1.42.0-x86_64-unknown-linux-gnu
+RUN rustup toolchain install 1.49.0-x86_64-unknown-linux-gnu \
+    &&rustup component add rls rust-src rustfmt clippy --toolchain 1.49.0-x86_64-unknown-linux-gnu
 RUN find /usr/local/cargo/bin/ -exec chmod 777 {} \;
 
 # [Optional] Uncomment this section to install additional OS packages.
