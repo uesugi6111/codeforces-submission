@@ -1,0 +1,113 @@
+# Path to the test file (Liquid template)
+#
+# Variables:
+#
+# - `manifest_dir`: Package directory
+# - `contest`:      Contest ID (e.g. "abc100")
+# - `bin_name`:     Name of a `bin` target (e.g. "abc100-a")
+# - `bin_alias`:    "Alias" for a `bin` target defined in `pacakge.metadata.cargo-compete` (e.g. "a")
+# - `problem`:      Alias for `bin_alias` (deprecated)
+#
+# Additional filters:
+#
+# - `kebabcase`: Convert to kebab case (by using the `heck` crate)
+test-suite = "{{ manifest_dir }}/testcases/{{ bin_alias }}.yml"
+
+# Open files with the command (`jq` command that outputs `string[] | string[][]`)
+#
+# VSCode:
+#open = '[["code", "-a", .manifest_dir], ["code"] + (.paths | map([.src, .test_suite]) | flatten)]'
+# Emacs:
+#open = '["emacsclient", "-n"] + (.paths | map([.src, .test_suite]) | flatten)'
+
+[new]
+kind = "cargo-compete"
+# Platform
+#
+# - atcoder
+# - codeforces
+# - yukicoder
+platform = "codeforces"
+# Path (Liquid template)
+#
+# Variables:
+#
+# - `contest`:      Contest ID. **May be nil**
+# - `package_name`: Package name
+path = "./{{ contest }}"
+
+#[new]
+#kind = "oj-api"
+#url = "https://atcoder.jp/contests/{{ id }}"
+#path = "./{{ contest }}"
+
+[new.template]
+#lockfile = "/path/to/cargo-lock-template.toml"
+# `profile` for `Cargo.toml`.
+#
+# By setting this, you can run tests with `opt-level=3` while enabling `debug-assertions` and `overflow-checks`.
+#profile = '''
+#[dev]
+#opt-level = 3
+#'''
+
+[new.template.dependencies]
+kind = "inline"
+content = '''
+#proconio = { version = "0.3.6", features = ["derive"] }
+'''
+
+[new.template.src]
+kind = "inline"
+content = '''
+#[rustfmt::skip]
+mod fast_input {
+    #[macro_export] macro_rules! input{(sc=$sc:expr,$($r:tt)*)=>{input_inner!{$sc,$($r)*}};($($r:tt)*)=>{let mut sc=fast_input::Scanner::new(std::io::stdin().lock(),4096);input_inner!{sc,$($r)*}};}
+    #[macro_export] macro_rules! input_inner{($sc:expr)=>{};($sc:expr,)=>{};($sc:expr,$var:ident:$t:tt$($r:tt)*)=>{let $var=read_value!($sc,$t);input_inner!{$sc $($r)*}};}
+    #[macro_export] macro_rules! read_value{($sc:expr,($($t:tt),*))=>{($(read_value!($sc,$t)),*)};($sc:expr,[$t:tt;$len:expr])=>{(0..$len).map(|_|read_value!($sc,$t)).collect::<Vec<_>>()};($sc:expr,Chars)=>{read_value!($sc,String).chars().collect::<Vec<char>>()};($sc:expr,Usize1)=>{read_value!($sc,usize)-1};($sc:expr,$t:ty)=>{$sc.next::<$t>()};}
+    pub struct Scanner {buf:Vec<u8>,pos: usize,}
+    impl Scanner {
+        pub fn new<R: std::io::Read>(mut reader: R, estimated: usize) -> Self {
+            let mut buf = Vec::with_capacity(estimated);let _=std::io::copy(&mut reader,&mut buf).unwrap();if buf.last()!=Some(&b'\n'){panic!("{}", 0);}
+            Scanner { buf, pos: 0 }
+        }
+        #[inline]
+        pub fn next<T: std::str::FromStr>(&mut self) -> T where T::Err: std::fmt::Debug,{
+            let mut start=None;loop{match(self.buf[self.pos],start.is_some()){(b' ',true)|(b'\n', true)|(b'\r', true)=>break,(_, true)|(b' ', false)|(b'\n',false)|(b'\r', true)=>self.pos+=1,(_, false)=>start=Some(self.pos),}}let target=&self.buf[start.unwrap()..self.pos];
+            unsafe { std::str::from_utf8_unchecked(target) }.parse().unwrap()
+        }
+    }
+}
+fn main() {
+    input!(n: usize);
+    println!("{}", n);
+}
+'''
+
+# for Library-Checker
+#[add]
+#url = "https://judge.yosupo.jp/problem/{{ args[0] }}"
+##is-contest = ["false"] # optional
+#bin-name = '{{ args[0] }}'
+##bin-alias = '{{ args[0] }}' # optional
+##bin-src-path = './src/bin/{{ bin_alias }}.rs' # optional
+
+# for yukicoder
+#[add]
+#url = '{% case args[0] %}{% when "contest" %}https://yukicoder.me/contests/{{ args[1] }}{% when "problem" %}https://yukicoder.me/problems/no/{{ args[1] }}{% endcase %}'
+#is-contest = ["bash", "-c", '[[ $(cut -d / -f 4) == "contests" ]]'] # optional
+#bin-name = '{% assign segments = url | split: "/" %}{{ segments[5] }}'
+##bin-alias = '{% assign segments = url | split: "/" %}{{ segments[5] }}' # optional
+##bin-src-path = './src/bin/{{ bin_alias }}.rs' # optional
+
+[test]
+# Profile for `cargo build`. ("dev" | "release")
+#
+# Defaults to `"dev"`.
+#profile = "dev"
+
+#[submit.transpile]
+#kind = "command"
+#args = ["cargo", "equip", "--resolve-cfgs", "--remove", "docs", "--minify", "libs", "--rustfmt", "--check", "--bin", "{{ bin_name }}"]
+##language_id = ""
+
