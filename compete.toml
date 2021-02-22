@@ -54,7 +54,7 @@ path = "./{{ contest }}"
 [new.template.dependencies]
 kind = "inline"
 content = '''
-#proconio = { version = "0.3.6", features = ["derive"] }
+competitive-library = { path = "../competitive-library" }
 '''
 
 [new.template.src]
