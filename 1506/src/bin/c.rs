@@ -28,7 +28,7 @@ fn main() {
         let (s, t) = if s.len() > t.len() { (t, s) } else { (s, t) };
         for i in (1..len + 1).rev() {
             for j in 0..len - i + 1 {
-                if rolling_hash(&s, &t, j, i) {
+                if rolling_hash(&s[j..i + j], &t) {
                     max = max.max(i);
                 }
             }
@@ -37,27 +37,28 @@ fn main() {
     }
 }
 
-pub fn rolling_hash(s: &[char], t: &[char], start: usize, l: usize) -> bool {
-    let b: u128 = 2u128.pow(61) - 1;
+pub fn rolling_hash(s: &[char], t: &[char]) -> bool {
+    let base: u128 = 2u128.pow(61) - 1;
+    let l = s.len();
 
-    let pow_b = b.wrapping_pow(l as u32);
+    let pow_b = base.wrapping_pow(l as u32);
 
     let mut target_hash: u128 = 0;
     let mut base_hash: u128 = 0;
     for k in 0..l {
-        base_hash = base_hash.wrapping_mul(b) + s[start + k] as u128;
-        target_hash = target_hash.wrapping_mul(b) + t[k] as u128;
+        base_hash = base_hash.wrapping_mul(base) + s[k] as u128;
+        target_hash = target_hash.wrapping_mul(base) + t[k] as u128;
     }
-
-    for k in 0..t.len() - l + 1 {
+    if target_hash == base_hash {
+        return true;
+    }
+    for k in 0..t.len() - l {
+        target_hash = target_hash
+            .wrapping_mul(base)
+            .wrapping_add(t[l + k] as u128)
+            .wrapping_sub((t[k] as u128).wrapping_mul(pow_b));
         if target_hash == base_hash {
             return true;
-        }
-        if l + k < t.len() {
-            target_hash = target_hash
-                .wrapping_mul(b)
-                .wrapping_add(t[l + k] as u128)
-                .wrapping_sub((t[k] as u128).wrapping_mul(pow_b));
         }
     }
     false
