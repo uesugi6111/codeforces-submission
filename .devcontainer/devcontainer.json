@@ -1,5 +1,5 @@
 {
-    "name": "Rust atcoder",
+    "name": "Rust codeforces",
     "build": {
         "dockerfile": "Dockerfile"
     },
