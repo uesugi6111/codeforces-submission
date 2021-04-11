@@ -20,6 +20,10 @@ fn main() {
             map.entry(v).and_modify(|x| *x += 1).or_insert(1);
         }
 
+        if map.len() != 2 {
+            println!();
+            continue;
+        }
         let mut ans = 0;
         for (i, v) in map {
             if v == 1 {
