@@ -1,0 +1,28 @@
+name: Update submodule Pull Request
+on:
+  repository_dispatch:
+    types: [update-submodule]
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@master 
+        with:
+          submodules: true
+
+      - run: git submodule update --remote
+
+      - name: Create Pull Request 
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: Update submodule.
+          labels: Auto PR
+          branch: auto-pr/update-submodule 
+          branch-suffix : timestamp 
+          commit-message: auto update submodule
+          base : master
+          delete-branch: true
+          token: ${{ secrets.AUTO_PR_TOKEN }}
