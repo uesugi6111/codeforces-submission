@@ -1,0 +1,40 @@
+[package]
+name = "contest1519"
+version = "0.1.0"
+authors = ["uesugi6111 <59960488+aburaya6111@users.noreply.github.com>"]
+edition = "2018"
+
+[package.metadata.cargo-compete.bin]
+contest1519-a = { alias = "a", problem = "https://codeforces.com/contest/1519/problem/A" }
+contest1519-b = { alias = "b", problem = "https://codeforces.com/contest/1519/problem/B" }
+contest1519-c = { alias = "c", problem = "https://codeforces.com/contest/1519/problem/C" }
+contest1519-d = { alias = "d", problem = "https://codeforces.com/contest/1519/problem/D" }
+contest1519-e = { alias = "e", problem = "https://codeforces.com/contest/1519/problem/E" }
+contest1519-f = { alias = "f", problem = "https://codeforces.com/contest/1519/problem/F" }
+
+[[bin]]
+name = "contest1519-a"
+path = "src/bin/a.rs"
+
+[[bin]]
+name = "contest1519-b"
+path = "src/bin/b.rs"
+
+[[bin]]
+name = "contest1519-c"
+path = "src/bin/c.rs"
+
+[[bin]]
+name = "contest1519-d"
+path = "src/bin/d.rs"
+
+[[bin]]
+name = "contest1519-e"
+path = "src/bin/e.rs"
+
+[[bin]]
+name = "contest1519-f"
+path = "src/bin/f.rs"
+[dependencies]
+competitive-library = { path = "../competitive-library" }
+[dev-dependencies]
