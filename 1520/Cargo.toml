@@ -1,0 +1,50 @@
+[package]
+name = "contest1520"
+version = "0.1.0"
+authors = ["uesugi6111 <59960488+aburaya6111@users.noreply.github.com>"]
+edition = "2018"
+
+[package.metadata.cargo-compete.bin]
+contest1520-a = { alias = "a", problem = "https://codeforces.com/contest/1520/problem/A" }
+contest1520-b = { alias = "b", problem = "https://codeforces.com/contest/1520/problem/B" }
+contest1520-c = { alias = "c", problem = "https://codeforces.com/contest/1520/problem/C" }
+contest1520-d = { alias = "d", problem = "https://codeforces.com/contest/1520/problem/D" }
+contest1520-e = { alias = "e", problem = "https://codeforces.com/contest/1520/problem/E" }
+contest1520-f1 = { alias = "f1", problem = "https://codeforces.com/contest/1520/problem/F1" }
+contest1520-f2 = { alias = "f2", problem = "https://codeforces.com/contest/1520/problem/F2" }
+contest1520-g = { alias = "g", problem = "https://codeforces.com/contest/1520/problem/G" }
+
+[[bin]]
+name = "contest1520-a"
+path = "src/bin/a.rs"
+
+[[bin]]
+name = "contest1520-b"
+path = "src/bin/b.rs"
+
+[[bin]]
+name = "contest1520-c"
+path = "src/bin/c.rs"
+
+[[bin]]
+name = "contest1520-d"
+path = "src/bin/d.rs"
+
+[[bin]]
+name = "contest1520-e"
+path = "src/bin/e.rs"
+
+[[bin]]
+name = "contest1520-f1"
+path = "src/bin/f1.rs"
+
+[[bin]]
+name = "contest1520-f2"
+path = "src/bin/f2.rs"
+
+[[bin]]
+name = "contest1520-g"
+path = "src/bin/g.rs"
+[dependencies]
+competitive-library = { path = "../competitive-library" }
+[dev-dependencies]
