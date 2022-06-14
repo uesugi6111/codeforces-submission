@@ -1,0 +1,36 @@
+[package]
+name = "contest1623"
+version = "0.1.0"
+edition = "2018"
+
+[package.metadata.cargo-compete.bin]
+contest1623-a = { alias = "a", problem = "https://codeforces.com/contest/1623/problem/A" }
+contest1623-b = { alias = "b", problem = "https://codeforces.com/contest/1623/problem/B" }
+contest1623-c = { alias = "c", problem = "https://codeforces.com/contest/1623/problem/C" }
+contest1623-d = { alias = "d", problem = "https://codeforces.com/contest/1623/problem/D" }
+contest1623-e = { alias = "e", problem = "https://codeforces.com/contest/1623/problem/E" }
+
+[[bin]]
+name = "contest1623-a"
+path = "src/bin/a.rs"
+
+[[bin]]
+name = "contest1623-b"
+path = "src/bin/b.rs"
+
+[[bin]]
+name = "contest1623-c"
+path = "src/bin/c.rs"
+
+[[bin]]
+name = "contest1623-d"
+path = "src/bin/d.rs"
+
+[[bin]]
+name = "contest1623-e"
+path = "src/bin/e.rs"
+
+[dependencies]
+competitive-library = { path = "../competitive-library" }
+
+[dev-dependencies]
